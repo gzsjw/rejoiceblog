@@ -1,0 +1,68 @@
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>我的说说</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>主题</th>
+        <th>内容</th>
+        <th>图片</th>
+        <th>分类</th>
+        <th>标签</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @post_articles.each do |post_article| %>
+        <tr>
+          <td>
+            <span class="has-tooltip" data-toggle="tooltip" title="<%= "创建于#{post_article.created_at.strftime("%m/%e/%Y %w:%M %p")}" %>" >
+              <%= truncate(sanitize(post_article.title), length: 15) %>
+            </span>
+           </td>
+          <td>
+            <% if post_article.notes? %>
+              <button type="button" class="btn btn-link has-popover" data-toggle="popover" title="简述" data-content="<%= truncate(sanitize(post_article.notes), length: 100) %>"> <%= truncate(sanitize(post_article.notes), length: 20) %> </button>
+
+              <!-- Button trigger modal -->
+              <button class="btn btn-link" data-toggle="modal" data-target="#article-<%= post_article.id %>-notes">
+                详细
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="article-<%= post_article.id %>-notes" tabindex="-1" role="dialog" aria-labelledby="article-<%= post_article.id %>-label" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="article-<%= post_article.id %>-label">详细内容</h4>
+                    </div>
+                    <div class="modal-body">
+                      <%= post_article.notes %>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </td>
+          <td><span class="glyphicon glyphicon-camera"></span></td>
+          <td><%= post_article.category %></td>
+          <td><%= post_article.keywords %></td>
+          <td><%= link_to '显示', post_article, class: 'btn btn-info btn-xs' %></td>
+          <td><%= link_to '编辑', edit_post_article_path(post_article), class: 'btn btn-default btn-xs' %></td>
+          <td><%= link_to '删除', post_article, method: :delete, class: 'btn btn-warning btn-xs' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to new_post_article_path, class: 'btn btn-success' do %>
+  <i class="glyphicon glyphicon-plus"></i> 有话要说
+<% end %>

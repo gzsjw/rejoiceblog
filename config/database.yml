@@ -1,0 +1,36 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: rejoiceblog_test
+  username: sjw
+  password: jw1218
+  host: localhost
+
+development:
+  <<: *default
+  database: rejoiceblog_dev
+  username: sjw
+  password: jw1218
+  host: localhost
+
+production:
+  <<: *default
+  database: rejoiceblog
+  username: gzsjw
+  password: aws-gzsjw-b91218
+  host: gzsjw-rds.ch7hjjux5ibn.ap-southeast-1.rds.amazonaws.com

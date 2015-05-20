@@ -1,0 +1,17 @@
+en:
+
+#START:currency
+  number:
+    currency:
+      format:
+        unit:      "$"
+        precision: 2
+        separator: "."
+        delimiter: ","
+        format:    "%u%n"
+#END:currency
+
+
+#START:flash
+  thanks:          "Thank you"
+#END:flash
