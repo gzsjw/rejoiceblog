@@ -1,0 +1,70 @@
+== README
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+development:ruby-2.0.0-p598
+
+deploy/production:ruby-2.0.0-p643
+
+* System dependencies
+
+* Configuration
+development:
+apache2+passenger+mysql2
+VirtualHost *:8088
+DocumentRoot /srv/myblog/rejoiceblog/public
+RailsEnv development
+
+deploy/product:
+apache2+passenger+mysql2
+web server:52.74.190.218(aws ec2)
+mysql server:gzsjw-rds.ch7hjjux5ibn.ap-southeast-1.rds.amazonaws.com(aws RDS)
+VirtualHost *:8088
+DocumentRoot /home/ubuntu/deploy/rejoiceblog/current/public
+RailsEnv production
+
+* Database creation
+development host:
+create database rejoiceblog_dev DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+create database rejoiceblog_test DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+deploy/product host:
+create database rejoiceblog DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+* Database initialization
+rake db:setup
+
+* How to run the test suite
+rake test
+
+* Services (job queues, cache servers, search engines, etc.)
+sudo service mysql start
+sudo service apache2 restart
+
+* Deployment instructions
+development host:
+git add --all
+git commit -m "deploy to aws"
+git push  github_gzsjw master
+
+deploy host:
+ssh ubuntu@52.74.190.218
+cd /srv/myblog/rejoiceblog_deploy/
+git pull github_gzsjw master
+
+cap deploy:setup
+cap deploy:check
+cap deploy:seed
+sudo service apache2 restart
+
+http://52.74.190.218:8088
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.
